@@ -83,7 +83,7 @@ def userregister(request):
             send_mail(
                 subject,
                 '',
-                'tejadatapoint0510@gmail.com',
+                settings.EMAIL_HOST_USER,
                 [email],
                 fail_silently=False,
                 html_message=message,  # Sending HTML email
@@ -193,7 +193,7 @@ def send_otp_email(name, email, otp, expiry_minutes):
     send_mail(
         subject,
         '',
-        'tejadatapoint0510@gmail.com',  # Sender email
+        settings.EMAIL_HOST_USER,
         [email],
         fail_silently=False,
         html_message=message,
