@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e1e2d;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            background: #29293f;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #464670;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        /* Login Box */
+        .login-container {
+            width: 350px;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 22px;
+        }
+
+        /* Input Fields */
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        .input-container input:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 5px rgba(30, 60, 114, 0.3);
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 18px;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #2a5298;
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-left: 5px solid #1e3c72;
+            margin-bottom: 20px;
+            font-size: 15px;
+            text-align: left;
+            border-radius: 8px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .instruction-box h3 {
+            color: #1e3c72;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .credentials {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .credentials p {
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        .credentials span {
+            background: #1e3c72;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Message Box */
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 15px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 5px solid #ffc107;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🔊Voice Bot 🔊</h2>
+            <a href="{% url 'basefunction' %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{%url 'userregister'%}"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="{% url 'userlogin' %}"><i class="fas fa-sign-in-alt"></i> User Login</a>
+            <a href="{% url 'adminlogin' %}"><i class="fas fa-user-shield"></i> Admin Login</a>
+        </div>
+
+        <!-- Main Login Form -->
+        <div class="main">
+            <div class="login-container">
+                <h2>Admin Login</h2>
+
+                <!-- Messages -->
+                {% if messages %}
+                {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <!-- Instruction Box -->
+                <div class="instruction-box">
+                    <h3>🔹 Admin Login Instructions</h3>
+                    <p>Use the default admin credentials below. <br>
+                        <strong>Do not use user login credentials.</strong>
+                    </p>
+                    <div class="credentials">
+                        <p><strong>👤 Username:</strong> <span>admin</span></p>
+                        <p><strong>🔑 Password:</strong> <span>admin</span></p>
+                    </div>
+                </div>
+
+                <form method="POST" action="{% url 'AdminLoginCheck' %}">
+                    {% csrf_token %}
+                    <div class="input-container">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="loginid" placeholder="Enter Admin Username" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="pswd" placeholder="Enter Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+
+                <div class="footer">
+                    &copy; Agriculture Voice Bot. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

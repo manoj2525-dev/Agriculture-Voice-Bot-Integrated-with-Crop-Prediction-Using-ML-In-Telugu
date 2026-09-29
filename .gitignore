@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local Django data and uploaded user files
+media/profile_photos/
+media/temp/
+*.mp3
+/crop_model.pkl

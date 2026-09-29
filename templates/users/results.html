@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e1e2d;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            background: #29293f;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #464670;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 20px;
+            color: white;
+            overflow-y: auto;
+        }
+
+        .main h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .recommendations {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .recommendations h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .product-list {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: #333;
+            width: 180px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .welcome-message {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* Chatbot floating button */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Chatbot box */
+        .chatbot-box {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 320px;
+            height: 400px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .chatbot-header {
+            background: #1e1e2d;
+            color: #fff;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chatbot-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #f4f4f4;
+        }
+
+        .bot-message,
+        .user-message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background: #dce6f1;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #a0e8af;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .chatbot-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background: #1e1e2d;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        /* EDA Plots Section */
+        .eda-plots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .eda-plot-item {
+            flex: 0 0 calc(33.333% - 20px);
+            max-width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+
+        .eda-plot-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .eda-plot-item {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        .accuracy-highlight {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 20px 30px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            margin-bottom: 30px;
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .accuracy-highlight span {
+            color: #00ff99;
+            font-size: 28px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🔊Voice Bot 🔊</h2>
+            <div class="profile">
+                <img src="{{user.profile_photo.url }}" alt="User Image">
+                <h2>{{ user }}</h2>
+            </div>
+            <a href="{% url 'userhome' user.name %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{% url 'dataset_view'%}"><i class="fas fa-database"></i> Dataset</a>
+            <a href="{% url 'chatfunction' %}"><i class="fa-solid fa-robot"></i> Start Voice Bot</a>
+            <a href="{% url 'train_model_view' %}"><i class="fa fa-brain"></i> Training</a>
+            <a href="{% url 'predict_crop_view' %}"><i class="fa fa-leaf"></i> Crop Prediction</a>
+            <a href="{% url 'userlogin' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+
+
+            <h1>🌾 Crop Model Results</h1>
+            <div class="accuracy-highlight">
+                ✅ Model Accuracy: <span>{{ accuracy|floatformat:2 }}%</span>
+            </div>
+
+            <h3>📊 EDA Plots:</h3>
+            <div class="eda-plots">
+                {% for plot in plots %}
+                <div class="eda-plot-item">
+                    <img src="{{ media_url }}{{ plot }}" alt="EDA Plot">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>

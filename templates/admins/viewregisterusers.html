@@ -1,0 +1,321 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Users List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e1e2d;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            background: #29293f;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #464670;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Messages Styling */
+        .messages {
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .alert {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            animation: fadeOut 5s forwards;
+        }
+
+        .alert-success { background: #28a745; color: white; }
+        .alert-error { background: #dc3545; color: white; }
+        .alert-warning { background: #ffc107; color: black; }
+        .alert-info { background: #17a2b8; color: white; }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+
+        /* Table Container (Scrollable) */
+        .table-container {
+            width: 90%;
+            max-height: 400px; /* Fixed height for scrolling */
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 0px; /* Starts from the top */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            color: #333;
+        }
+
+        /* Table Header (Fixed) */
+        thead {
+            background: linear-gradient(to right, #2a5298, #1e3c72);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        /* Table Rows */
+        tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background: #e3e3e3;
+        }
+
+        /* Profile Photo */
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        /* Status Badges */
+        .status-waiting {
+            background: #ff9800;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-activated {
+            background: #4CAF50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-blocked {
+            background: #f44336;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .btn {
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-activate {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-block {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-unblock {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #d9534f;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🔊Voice Bot 🔊</h2>
+            <a href="{% url 'AdminHome' %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{%url 'RegisterUsersView'%}"><i class="fas fa-list"></i> Users List</a>
+            <a href="{% url 'adminlogin' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <h2>Registered Users</h2>
+
+            <!-- Messages Section -->
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Scrollable Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serial No.</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Profile Photo</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                            <th>Action Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in data %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.mobile }}</td>
+                            <td>
+                                {% if user.profile_photo %}
+                                <img src="{{ user.profile_photo.url }}" alt="Profile Photo" width="40" height="40">
+                                {% else %}
+                                <img src="{% static 'img/default.png' %}" alt="Default" width="40" height="40">
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.status == 'waiting' %}
+                                <span class="status-waiting">Waiting</span>
+                                {% elif user.status == 'activated' %}
+                                <span class="status-activated">Activated</span>
+                                {% elif user.status == 'blocked' %}
+                                <span class="status-blocked">Blocked</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.status == 'waiting' %}
+                                <a href="{% url 'activate_user' user.id %}?extra=@?@" class="btn btn-activate">Activate</a>
+        
+                                {% elif user.status == 'activated' %}
+                                <a href="{% url 'BlockUser' user.id %}?extra=@?@" class="btn btn-block">Block</a>
+                                {% elif user.status == 'blocked' %}
+                                <a href="{% url 'UnblockUser' user.id %}?extra=@?@" class="btn btn-unblock">Unblock</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="{% url 'DeleteUser' user.id %}?extra=@?@" class="btn btn-unblock">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                        
+
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

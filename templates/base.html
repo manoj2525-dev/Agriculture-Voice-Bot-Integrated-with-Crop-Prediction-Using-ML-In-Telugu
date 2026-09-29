@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main | Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #1e1e2d;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            background: #29293f;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #464670;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 20px;
+            color: white;
+        }
+
+        .main h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .recommendations {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .recommendations h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .product-list {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: #333;
+            width: 150px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product p {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>🔊Voice Bot 🔊</h2>
+
+            <a href="{% url 'basefunction' %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{% url 'userregister' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
+            <a href="{% url 'userlogin' %}"><i class="fas fa-sign-in-alt"></i> User Login</a>
+            <a href="{% url 'adminlogin' %}"><i class="fas fa-user-shield"></i> Admin Login</a>
+        </div>
+        <!-- Main Content -->
+        <div class="main">
+            <h1>🌾 Agriculture Voice Bot with Crop Prediction using ML (Telugu Language)</h1>
+            <div class="highlight">
+                <p><strong>🌾 Agriculture Voice Bot with Crop Prediction using ML</strong></p>
+                <p>🗣️🎙️ Use voice commands in Telugu to interact with the bot</p>
+                <p>📈🌱 Get crop predictions based on Some Weather conditions</p>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
